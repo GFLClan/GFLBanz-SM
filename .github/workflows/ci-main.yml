@@ -31,6 +31,7 @@ jobs:
           
       - name: Compile GFLBans
         run: |
+          mkdir addons/sourcemod/plugins
           make CC=spcomp64 
           
       - name: Move addons folder to build
