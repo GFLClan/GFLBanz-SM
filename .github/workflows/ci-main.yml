@@ -16,6 +16,8 @@ jobs:
         
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
           
       - name: Setup SourcePawn Compiler ${{ matrix.SM_VERSION }}
         uses: rumblefrog/setup-sp@master
@@ -24,7 +26,7 @@ jobs:
       - name: Set variables
         id: vars
         run: |
-          VERSION=$(git rev-parse --count HEAD)
+          VERSION=$(git rev-list --count HEAD)
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "::set-output name=plugin_version::${{ matrix.SM_VERSION }}.$VERSION.$SHORT_SHA"
       - name: Set GFLBans version
