@@ -206,7 +206,7 @@ void OnHeartbeatPulse(HTTPResponse response, any value) // Callback for heartbea
 /***************************************
  * Create Infractions API
 ***************************************/
-void API_CreateInfraction(int iClient, int iTarget, int iLength, const char[] sReason, int iPunishmentFlags, CreateInfraction infraction)
+void API_CreateInfraction(int iClient, int iTarget, int iLength, const char[] sReason, PunishmentsTemplate iPunishmentFlags, CreateInfraction infraction)
 {
     char requestURL[512];
     Format(requestURL, sizeof(requestURL), "infractions/");
@@ -229,8 +229,9 @@ void API_CreateInfraction(int iClient, int iTarget, int iLength, const char[] sR
     httpClient.Post(requestURL, infraction, OnCreateInfractionsCallback, dp);
 }
 
-void OnCreateInfractionsCallback(HTTPResponse response, DataPack dp, const char[] sError)
+void OnCreateInfractionsCallback(HTTPResponse response, any data, const char[] sError)
 {
+    DataPack dp = view_as<DataPack>(data);
     int iClient = dp.ReadCell();
     int iTarget = dp.ReadCell();
     int iLength = dp.ReadCell();
@@ -394,7 +395,7 @@ void OnCreateInfractionsCallback(HTTPResponse response, DataPack dp, const char[
 /***************************************
  * Remove Infractions API
 ***************************************/
-void API_RemoveInfraction(int iClient, int iTarget, const char[] sReason, int iPunishmentFlags, RemoveInfractionsOfPlayer removeInfraction)
+void API_RemoveInfraction(int iClient, int iTarget, const char[] sReason, PunishmentsTemplate iPunishmentFlags, RemoveInfractionsOfPlayer removeInfraction)
 {
     char requestURL[512];
     Format(requestURL, sizeof(requestURL), "infractions/remove");
@@ -416,8 +417,9 @@ void API_RemoveInfraction(int iClient, int iTarget, const char[] sReason, int iP
     httpClient.Post(requestURL, removeInfraction, OnRemoveInfractionsCallback, dp);
 }
 
-void OnRemoveInfractionsCallback(HTTPResponse response, DataPack dp, const char[] sError)
+void OnRemoveInfractionsCallback(HTTPResponse response, any data, const char[] sError)
 {
+    DataPack dp = view_as<DataPack>(data);
     int iClient = dp.ReadCell();
     int iTarget = dp.ReadCell();
     

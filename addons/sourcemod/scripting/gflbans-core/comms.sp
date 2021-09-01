@@ -111,11 +111,11 @@ public Action ListenerCallback(int client, const char[] command, int args)
                 else if (!g_esPlayerInfo[iTarget].gagIsGagged && bRemovingInfraction)
                     ReplyToCommand(client, "%s%t", PREFIX, "Player Not Gagged", iTarget);
                 else if (bRemovingInfraction) {
-                    ProcessUnblock(client, iTarget, view_as<int>(iPunishmentType), sReason, iTargetCount);
+                    ProcessUnblock(client, iTarget, iPunishmentType, sReason, iTargetCount);
                     bPlayerFound = true;
                 }
                 else {
-                    ProcessBlock(client, iTarget, iPunishmentLength, view_as<int>(iPunishmentType), sReason);
+                    ProcessBlock(client, iTarget, iPunishmentLength, iPunishmentType, sReason);
                     bPlayerFound = true;
                 }
             }
@@ -127,11 +127,11 @@ public Action ListenerCallback(int client, const char[] command, int args)
                 else if (!g_esPlayerInfo[iTarget].muteIsMuted && bRemovingInfraction)
                     ReplyToCommand(client, "%s%t", PREFIX, "Player Not Muted", iTarget);
                 else if (bRemovingInfraction) {
-                    ProcessUnblock(client, iTarget, view_as<int>(iPunishmentType), sReason, iTargetCount);
+                    ProcessUnblock(client, iTarget, iPunishmentType, sReason, iTargetCount);
                     bPlayerFound = true;
                 }
                 else {
-                    ProcessBlock(client, iTarget, iPunishmentLength, view_as<int>(iPunishmentType), sReason);
+                    ProcessBlock(client, iTarget, iPunishmentLength, iPunishmentType, sReason);
                     bPlayerFound = true;
                 }
             }
@@ -141,7 +141,7 @@ public Action ListenerCallback(int client, const char[] command, int args)
                 if (!bRemovingInfraction)
                 {
                     if (!g_esPlayerInfo[iTarget].muteIsMuted && !g_esPlayerInfo[iTarget].gagIsGagged) {
-                        ProcessBlock(client, iTarget, iPunishmentLength, view_as<int>(iPunishmentType), sReason);
+                        ProcessBlock(client, iTarget, iPunishmentLength, iPunishmentType, sReason);
                         bPlayerFound = true;
                     }
                     else if (g_esPlayerInfo[iTarget].muteIsMuted && g_esPlayerInfo[iTarget].gagIsGagged)
@@ -152,7 +152,7 @@ public Action ListenerCallback(int client, const char[] command, int args)
                 else
                 {
                     if (g_esPlayerInfo[iTarget].muteIsMuted && g_esPlayerInfo[iTarget].gagIsGagged) {
-                        ProcessUnblock(client, iTarget, view_as<int>(iPunishmentType), sReason, iTargetCount);
+                        ProcessUnblock(client, iTarget, iPunishmentType, sReason, iTargetCount);
                         bPlayerFound = true;
                     }
                     else if (!g_esPlayerInfo[iTarget].muteIsMuted && !g_esPlayerInfo[iTarget].gagIsGagged)
@@ -405,7 +405,7 @@ stock void PerformUnmute(int iTarget)
 /***************************************
  * Setting up of comms
 ***************************************/
-stock void ProcessBlock(int iClient, int iTarget, int iLength, int iPunishmentType, const char[] sReason)
+stock void ProcessBlock(int iClient, int iTarget, int iLength, PunishmentsTemplate iPunishmentType, const char[] sReason)
 {
     if (!IsValidClient(iTarget))
         return;
@@ -451,7 +451,7 @@ stock void ProcessBlock(int iClient, int iTarget, int iLength, int iPunishmentTy
 /***************************************
  * Removal of comms
 ***************************************/
-stock void ProcessUnblock(int iClient, int iTarget, int iPunishmentType, const char[] sReason, int iTargetCount)
+stock void ProcessUnblock(int iClient, int iTarget, PunishmentsTemplate iPunishmentType, const char[] sReason, int iTargetCount)
 {
     if (!IsValidClient(iTarget))
         return;

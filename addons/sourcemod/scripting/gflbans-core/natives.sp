@@ -43,7 +43,7 @@ public int Native_SetClientGag(Handle hPlugin, int iNumParams)
         
         PerformGag(iTarget, iLength, _, sReason, _);
         if (bSavePunishment && iLength >= 0)
-            SetupInfraction(_, iTarget, iLength, sReason, view_as<int>(P_CHAT));
+            SetupInfraction(_, iTarget, iLength, sReason, P_CHAT);
     }
     else
     {
@@ -90,7 +90,7 @@ public int Native_SetClientMute(Handle hPlugin, int iNumParams)
         
         PerformMute(iTarget, iLength, _, sReason, _);
         if (bSavePunishment && iLength >= 0)
-            SetupInfraction(_, iTarget, iLength, sReason, view_as<int>(P_VOICE));
+            SetupInfraction(_, iTarget, iLength, sReason, P_VOICE);
     }
     else
     {
