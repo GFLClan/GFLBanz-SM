@@ -22,12 +22,12 @@ jobs:
       - name: Set variables
         id: vars
         run: |
-          version=$(git rev-parse --count HEAD)
-          shortSha=$(git rev-parse --short HEAD)
-          echo "::set-output name=plugin_version::${{ matrix.SM_VERSION }}.$version.$shortSha"
+          VERSION=$(git rev-parse --count HEAD)
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "::set-output name=plugin_version::${{ matrix.SM_VERSION }}.$VERSION.$SHORT_SHA"
       - name: Set GFLBans version
         run: |
-          sed -i "s/<VERSION>/${{ steps.vars.outputs.plugin_version }}/g" $SCRIPTS_PATH/gflbans-core/variables.sp
+          sed -i "s/<VERSION>/${{ steps.vars.outputs.plugin_version }}/g" addons/sourcemod/scripting/gflbans-core/variables.sp
           
       - name: Compile GFLBans
         run: |
