@@ -41,6 +41,6 @@ public Action Command_Ban(int iClient, int iArgs)
         Format(sReason, sizeof(sReason), "%s %s", sReason, sBuffer);
     }
     
-    SetupInfraction(iClient, iTarget, iBanTime, sReason, view_as<int>(P_BAN));
+    SetupInfraction(iClient, iTarget, iBanTime, sReason, P_BAN);
     return Plugin_Handled;
 }

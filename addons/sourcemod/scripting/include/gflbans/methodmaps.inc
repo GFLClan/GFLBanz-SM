@@ -248,7 +248,7 @@ methodmap CreateInfraction < JSONObject
         this.SetString("reason", buffer);
     }
     
-    public void SetPunishment(int iPunishmentFlags)
+    public void SetPunishment(PunishmentsTemplate iPunishmentFlags)
     {
 //        char sBuffer[32];
 //        switch(punishment)
@@ -280,19 +280,19 @@ methodmap CreateInfraction < JSONObject
 
         JSONArray punishmentArray = new JSONArray();
         
-        if (iPunishmentFlags & BITS_VOICE_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_VOICE_BLOCK)
             punishmentArray.PushString("voice_block");
             
-        if (iPunishmentFlags & BITS_CHAT_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_CHAT_BLOCK)
             punishmentArray.PushString("chat_block");
         
-        if (iPunishmentFlags & BITS_BAN)
+        if (view_as<int>(iPunishmentFlags) & BITS_BAN)
             punishmentArray.PushString("ban");
             
-        if (iPunishmentFlags & BITS_ADMIN_CHAT_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_ADMIN_CHAT_BLOCK)
             punishmentArray.PushString("admin_chat_block");
             
-        if (iPunishmentFlags & BITS_CALL_ADMIN_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_CALL_ADMIN_BLOCK)
             punishmentArray.PushString("call_admin_block");
 
         this.Set("punishments", punishmentArray);
@@ -425,23 +425,23 @@ methodmap RemoveInfractionsOfPlayer < JSONObject
         }
     }
     
-    public void SetRestrictTypes(int iPunishmentFlags)
+    public void SetRestrictTypes(PunishmentsTemplate iPunishmentFlags)
     {
         JSONArray restrictArray = new JSONArray();
         
-        if (iPunishmentFlags & BITS_VOICE_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_VOICE_BLOCK)
             restrictArray.PushString("voice_block");
             
-        if (iPunishmentFlags & BITS_CHAT_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_CHAT_BLOCK)
             restrictArray.PushString("chat_block");
         
-        if (iPunishmentFlags & BITS_BAN)
+        if (view_as<int>(iPunishmentFlags) & BITS_BAN)
             restrictArray.PushString("ban");
             
-        if (iPunishmentFlags & BITS_ADMIN_CHAT_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_ADMIN_CHAT_BLOCK)
             restrictArray.PushString("admin_chat_block");
             
-        if (iPunishmentFlags & BITS_CALL_ADMIN_BLOCK)
+        if (view_as<int>(iPunishmentFlags) & BITS_CALL_ADMIN_BLOCK)
             restrictArray.PushString("call_admin_block");
 
         this.Set("restrict_types", restrictArray);

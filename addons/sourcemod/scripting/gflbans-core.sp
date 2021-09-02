@@ -34,7 +34,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     
     CreateNatives(); // From natives.sp
     CreateForwards(); // From forwards.sp
-    
+
     return APLRes_Success;
 }
 
@@ -174,7 +174,7 @@ public Action Command_GFLBansDebug(int iClient, int iArgs)
 *
 * Create punishment
 **/
-void SetupInfraction(int iClient = 0, int iTarget, int iLength, const char[] sReason, int iPunishmentFlags)
+void SetupInfraction(int iClient = 0, int iTarget, int iLength, const char[] sReason, PunishmentsTemplate iPunishmentFlags)
 {
     CreateInfraction infraction = new CreateInfraction();
     
@@ -220,7 +220,7 @@ void SetupInfraction(int iClient = 0, int iTarget, int iLength, const char[] sRe
 *
 * Remove Infraction
 **/
-void SetupRemoval(int iClient, int iTarget, int iPunishmentFlags, const char[] sReason)
+void SetupRemoval(int iClient, int iTarget, PunishmentsTemplate iPunishmentFlags, const char[] sReason)
 {
     RemoveInfractionsOfPlayer removeInfraction = new RemoveInfractionsOfPlayer();
     
