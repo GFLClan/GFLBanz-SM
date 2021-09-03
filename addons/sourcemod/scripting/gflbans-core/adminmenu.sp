@@ -1,9 +1,4 @@
-int TYPE_MUTE       = 1;
-int TYPE_UNMUTE     = 2;
-int TYPE_GAG        = 3;
-int TYPE_UNGAG      = 4;
-int TYPE_SILENCE    = 5;
-int TYPE_UNSILENCE  = 6;
+// Credits to SourceBans.
 
 Handle g_hTopMenu = INVALID_HANDLE;
 
@@ -140,5 +135,118 @@ public void AdminMenu_Unsilence(Handle menu, TopMenuAction action, TopMenuObject
 public void AdminMenu_TargetHandler(int client, int infractionType)
 {
     // We need to display a list of players for the admin to choose from.
-    // TBA
+
+    char Title[128], Option[32];
+    Format(Title, sizeof(Title), "%T", "Admin Menu Select", client);
+
+    // List of players relevant to action.
+    Menu menu = CreateMenu(AdminMenu_ChoosePlayer);
+    SetMenuTitle(menu, Title);
+    SetMenuExitBackButton(menu, true);
+
+    int clientCount;
+    if (infractionType <= 3) // Mute, gag, silence
+    {
+        for (int i = 1; i < MAXPLAYERS; i++)
+        {
+            if (IsClientInGame(i) && !IsFakeClient(i))
+            {
+                switch (infractionType)
+                {
+                    case TYPE_MUTE:
+                    {
+                        if (g_esPlayerInfo[i].muteIsMuted)
+                            continue;
+                    }
+
+                    case TYPE_GAG:
+                    {
+                        if (g_esPlayerInfo[i].gagIsGagged)
+                            continue;
+                    }
+                        
+                    case TYPE_SILENCE:
+                    {
+                        if (g_esPlayerInfo[i].muteIsMuted || g_esPlayerInfo[i].gagIsGagged)
+                            continue;
+                    }
+                }
+
+                clientCount++;
+                char clientName[64];
+                GetClientName(client, clientName, sizeof(clientName));
+
+                FormatEx(Title, sizeof(Title), clientName);
+                Format(Option, sizeof(Option), "%d %d", GetClientUserId(i), infractionType);
+                AddMenuItem(menu, Option, Title, (CanUserTarget(client, i) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED));
+            }
+        }
+    }
+
+    else // Unmute, Ungag, Unsilence
+    {
+        for (int i = 1; i < MAXPLAYERS; i++)
+        {
+            if (IsClientInGame(i) && !IsFakeClient(i))
+            {
+                switch (infractionType)
+                {
+                    case TYPE_UNMUTE:
+                    {
+                        if (g_esPlayerInfo[i].muteIsMuted)
+                        {
+                            clientCount++;
+                            char clientName[64];
+                            GetClientName(client, clientName, sizeof(clientName));
+
+                            Format(Title, sizeof(Title), clientName);
+                            Format(Option, sizeof(Option), "%d %d", GetClientUserId(i), infractionType);
+                            AddMenuItem(menu, Option, Title, (CanUserTarget(client, i) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED));
+                        }
+                    }
+
+                    case TYPE_UNGAG:
+                    {
+                        if (g_esPlayerInfo[i].gagIsGagged)
+                        {
+                            clientCount++;
+                            char clientName[64];
+                            GetClientName(client, clientName, sizeof(clientName));
+
+                            Format(Title, sizeof(Title), clientName);
+                            Format(Option, sizeof(Option), "%d %d", GetClientUserId(i), infractionType);
+                            AddMenuItem(menu, Option, Title, (CanUserTarget(client, i) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED));
+                        }
+                    }
+
+                    case TYPE_UNSILENCE:
+                    {
+                        if (g_esPlayerInfo[i].muteIsMuted && g_esPlayerInfo[i].gagIsGagged)
+                        {
+                            clientCount++;
+                            char clientName[64];
+                            GetClientName(client, clientName, sizeof(clientName));
+
+                            Format(Title, sizeof(Title), clientName);
+                            Format(Option, sizeof(Option), "%d %d", GetClientUserId(i), infractionType);
+                            AddMenuItem(menu, Option, Title, (CanUserTarget(client, i) ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (!clientCount)
+    {
+        Format(Title, sizeof(Title), "%T", "Admin Menu Empty", client);
+        AddMenuItem(menu, "0", Title, ITEMDRAW_DISABLED);
+    }
+
+    DisplayMenu(menu, client, MENU_TIME_FOREVER);
+}
+
+public int AdminMenu_ChoosePlayer(Handle menu, MenuAction action, int param1, int param2)
+{
+
 }

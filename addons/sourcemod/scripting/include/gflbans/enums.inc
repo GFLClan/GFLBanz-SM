@@ -3,6 +3,13 @@ enum InfractionScope {
     SCOPE_SERVER
 }
 
+#define TYPE_MUTE		1
+#define TYPE_UNMUTE		2
+#define TYPE_GAG		3
+#define TYPE_UNGAG		4
+#define TYPE_SILENCE	5
+#define TYPE_UNSILENCE	6
+
 #define BITS_VOICE_BLOCK        (1 << 0)    // 1
 #define BITS_CHAT_BLOCK         (1 << 1)    // 2
 #define BITS_BAN                (1 << 2)    // 4

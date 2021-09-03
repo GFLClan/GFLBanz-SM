@@ -200,4 +200,15 @@
         "#format"   "{1:N}"
         "en"        "Player \"{1}\" is not silenced!"
     }
+
+    // <ADMIN MENU> ----------------------------------------------------------------------
+    "Admin Menu Select"
+	{
+		"en"		"Select Player:"
+    }
+
+    "Admin Menu Empty"
+	{
+		"en"		"No Results."
+    }
 }
